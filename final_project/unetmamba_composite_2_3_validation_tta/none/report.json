@@ -1,0 +1,873 @@
+{
+  "label": "Potsdam RGB; six-class semantic segmentation",
+  "mode": "predict",
+  "device": "cuda",
+  "torch": "2.11.0+cu130",
+  "config": {
+    "data_root": "/kaggle/input/datasets/squarcle01/potsdam-dataset-final/final_dataset",
+    "output_root": "/kaggle/working/full_unetmamba_composite_beta_2_3_runs",
+    "prediction_split": "validation",
+    "dataset": "Potsdam",
+    "input_channels": [
+      "red",
+      "green",
+      "blue"
+    ],
+    "num_classes": 6,
+    "class_names": [
+      "impervious_surface",
+      "building",
+      "low_vegetation",
+      "tree",
+      "car",
+      "clutter"
+    ],
+    "ignore_index": 255,
+    "loss": "main_head_ce_dice_beta_2_3",
+    "selection_metric": "mean_iou",
+    "include_clutter_in_mean": true,
+    "precision": "float32",
+    "seed": 20261110,
+    "epochs": 10,
+    "batch_size": 2,
+    "patch_size": 512,
+    "pretrained": false,
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "num_workers": 0,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.01,
+    "cpu_threads": 4,
+    "label": "Potsdam UNetMamba composite search trial beta=2/3",
+    "model": "UNetMamba",
+    "scan_backend": "cuda",
+    "required_manifest_sha256": "31e5fd6ba0e0056ea484ae52b985080403ba36d92c8b40dc00a66bbeeb07819e",
+    "scheduler": "constant",
+    "excluded_training_tiles": [
+      "4_12",
+      "6_7"
+    ],
+    "effective_split_counts": {
+      "train": 16,
+      "validation": 6,
+      "test": 14
+    },
+    "exclusion_reason": "Match UNetFormer experiments: exclude two nonstandard-palette training masks",
+    "budget_note": "10 epochs due to time constraints; previous UNetMamba CE and UNetFormer experiments used 20 epochs. Not a matched-budget comparison.",
+    "composite_beta": 0.6666666666666666,
+    "composite_ce_weight": 0.3333333333333333,
+    "dice_smoothing": 1e-06,
+    "dice_reduction": "Mean of six class Dice scores; pooled batch and spatial dimensions",
+    "search_trial": "beta_2_3",
+    "parameter_status": "Predefined grid-search candidate; not yet selected as optimal"
+  },
+  "class_names": [
+    "impervious_surface",
+    "building",
+    "low_vegetation",
+    "tree",
+    "car",
+    "clutter"
+  ],
+  "ignore_index": 255,
+  "parameters": 14755946,
+  "trainable_parameters": 14755946,
+  "manifest_sha256": "31e5fd6ba0e0056ea484ae52b985080403ba36d92c8b40dc00a66bbeeb07819e",
+  "initialization": "checkpoint",
+  "recipe": "Float32; main-head CE-Dice composite loss only; no auxiliary loss",
+  "split": "validation",
+  "tiles": 6,
+  "patches": 864,
+  "prediction": {
+    "files": {
+      "2_12": "/kaggle/working/unetmamba_tta_validation_9f3450b2/none/predictions/top_potsdam_2_12_prediction.tif",
+      "5_12": "/kaggle/working/unetmamba_tta_validation_9f3450b2/none/predictions/top_potsdam_5_12_prediction.tif",
+      "6_10": "/kaggle/working/unetmamba_tta_validation_9f3450b2/none/predictions/top_potsdam_6_10_prediction.tif",
+      "6_12": "/kaggle/working/unetmamba_tta_validation_9f3450b2/none/predictions/top_potsdam_6_12_prediction.tif",
+      "7_7": "/kaggle/working/unetmamba_tta_validation_9f3450b2/none/predictions/top_potsdam_7_7_prediction.tif",
+      "7_8": "/kaggle/working/unetmamba_tta_validation_9f3450b2/none/predictions/top_potsdam_7_8_prediction.tif"
+    },
+    "overall": {
+      "confusion_matrix": [
+        [
+          50500391,
+          4114759,
+          2236765,
+          1772854,
+          327696,
+          2056781
+        ],
+        [
+          4149571,
+          64441684,
+          1452164,
+          693119,
+          53608,
+          1552958
+        ],
+        [
+          4228294,
+          1463888,
+          32038946,
+          6045659,
+          25834,
+          1433881
+        ],
+        [
+          3758717,
+          567254,
+          6499199,
+          15457181,
+          173330,
+          912117
+        ],
+        [
+          439587,
+          199578,
+          9606,
+          9105,
+          3511798,
+          166085
+        ],
+        [
+          1704241,
+          1344693,
+          547716,
+          425139,
+          162210,
+          1523592
+        ]
+      ],
+      "valid_pixels": 216000000,
+      "per_class": {
+        "impervious_surface": {
+          "iou": 0.6707480639837164,
+          "f1": 0.8029314274761341,
+          "reference_pixels": 61009246,
+          "predicted_pixels": 64780801,
+          "precision": 0.7795579897198246,
+          "recall": 0.827749797137306
+        },
+        "building": {
+          "iou": 0.8051861328280502,
+          "f1": 0.8920810083629717,
+          "reference_pixels": 72343104,
+          "predicted_pixels": 72131856,
+          "precision": 0.8933872989487475,
+          "recall": 0.8907785322565092
+        },
+        "low_vegetation": {
+          "iou": 0.5723084825623801,
+          "f1": 0.7279849837478368,
+          "reference_pixels": 45236502,
+          "predicted_pixels": 42784396,
+          "precision": 0.748846518716777,
+          "recall": 0.7082542766016701
+        },
+        "tree": {
+          "iou": 0.42565731575383975,
+          "f1": 0.597138331982348,
+          "reference_pixels": 27367798,
+          "predicted_pixels": 24403057,
+          "precision": 0.6334116664154004,
+          "recall": 0.5647944712249046
+        },
+        "car": {
+          "iou": 0.6915115812207575,
+          "f1": 0.8176255946432199,
+          "reference_pixels": 4335759,
+          "predicted_pixels": 4254476,
+          "precision": 0.8254360819052687,
+          "recall": 0.809961531533464
+        },
+        "clutter": {
+          "iou": 0.12879692339763604,
+          "f1": 0.22820211630265996,
+          "reference_pixels": 5707591,
+          "predicted_pixels": 7645414,
+          "precision": 0.1992818178322325,
+          "recall": 0.26694134180252227
+        }
+      },
+      "mean_precision": 0.6799868955897085,
+      "mean_recall": 0.6780799917593959,
+      "mean_iou": 0.5490347499577299,
+      "mean_f1": 0.6776605770858618,
+      "pixel_accuracy": 0.7753407037037037,
+      "averaging": "All six classes including clutter; undefined classes excluded"
+    },
+    "per_tile": {
+      "2_12": {
+        "confusion_matrix": [
+          [
+            5229487,
+            659798,
+            378863,
+            110967,
+            14644,
+            519069
+          ],
+          [
+            263396,
+            2810061,
+            279342,
+            87982,
+            182,
+            130682
+          ],
+          [
+            538152,
+            145155,
+            16383069,
+            784177,
+            2964,
+            469083
+          ],
+          [
+            403964,
+            29247,
+            3558578,
+            2358632,
+            10744,
+            271837
+          ],
+          [
+            40035,
+            29648,
+            2107,
+            727,
+            225049,
+            28696
+          ],
+          [
+            22575,
+            21091,
+            61040,
+            7313,
+            6036,
+            115608
+          ]
+        ],
+        "valid_pixels": 36000000,
+        "per_class": {
+          "impervious_surface": {
+            "iou": 0.6392273513467263,
+            "f1": 0.7799129886669615,
+            "reference_pixels": 6912828,
+            "predicted_pixels": 6497609,
+            "precision": 0.8048325160839933,
+            "recall": 0.7564902526144148
+          },
+          "building": {
+            "iou": 0.6305414640451072,
+            "f1": 0.773413590453366,
+            "reference_pixels": 3571645,
+            "predicted_pixels": 3695000,
+            "precision": 0.760503653585927,
+            "recall": 0.7867694017742525
+          },
+          "low_vegetation": {
+            "iou": 0.7248334146664113,
+            "f1": 0.8404677327133027,
+            "reference_pixels": 18322600,
+            "predicted_pixels": 20662999,
+            "precision": 0.7928698539839256,
+            "recall": 0.8941454269590561
+          },
+          "tree": {
+            "iou": 0.309362542903042,
+            "f1": 0.4725391673678727,
+            "reference_pixels": 6633002,
+            "predicted_pixels": 3349798,
+            "precision": 0.7041117106165805,
+            "recall": 0.3555904249689658
+          },
+          "car": {
+            "iou": 0.6236946833983682,
+            "f1": 0.7682413322842011,
+            "reference_pixels": 326262,
+            "predicted_pixels": 259619,
+            "precision": 0.8668433358113236,
+            "recall": 0.6897799927665496
+          },
+          "clutter": {
+            "iou": 0.06993702473639317,
+            "f1": 0.13073110495194606,
+            "reference_pixels": 233663,
+            "predicted_pixels": 1534975,
+            "precision": 0.07531588462352808,
+            "recall": 0.4947638265365077
+          }
+        },
+        "mean_precision": 0.667412825784213,
+        "mean_recall": 0.6629232209366244,
+        "mean_iou": 0.499599413516008,
+        "mean_f1": 0.6275509860729417,
+        "pixel_accuracy": 0.7533862777777778,
+        "averaging": "All six classes including clutter; undefined classes excluded"
+      },
+      "5_12": {
+        "confusion_matrix": [
+          [
+            9172828,
+            1240708,
+            406223,
+            245493,
+            89945,
+            86839
+          ],
+          [
+            1003596,
+            15430566,
+            233935,
+            112621,
+            11855,
+            708848
+          ],
+          [
+            547102,
+            301291,
+            1648879,
+            666480,
+            2192,
+            44652
+          ],
+          [
+            700671,
+            162232,
+            159092,
+            985170,
+            64182,
+            61021
+          ],
+          [
+            138480,
+            81369,
+            864,
+            67,
+            855716,
+            25045
+          ],
+          [
+            188135,
+            441330,
+            59659,
+            9319,
+            37602,
+            75993
+          ]
+        ],
+        "valid_pixels": 36000000,
+        "per_class": {
+          "impervious_surface": {
+            "iou": 0.6637347847542913,
+            "f1": 0.7978853250367245,
+            "reference_pixels": 11242036,
+            "predicted_pixels": 11750812,
+            "precision": 0.7806122674756434,
+            "recall": 0.8159401019530625
+          },
+          "building": {
+            "iou": 0.7821518382352383,
+            "f1": 0.8777611665342252,
+            "reference_pixels": 17501421,
+            "predicted_pixels": 17657496,
+            "precision": 0.8738818912942129,
+            "recall": 0.88167503655846
+          },
+          "low_vegetation": {
+            "iou": 0.40509324830254945,
+            "f1": 0.5766069245467236,
+            "reference_pixels": 3210596,
+            "predicted_pixels": 2508652,
+            "precision": 0.6572768961179151,
+            "recall": 0.5135741152110076
+          },
+          "tree": {
+            "iou": 0.311137626060054,
+            "f1": 0.47460711961263324,
+            "reference_pixels": 2132368,
+            "predicted_pixels": 2019150,
+            "precision": 0.48791323081494686,
+            "recall": 0.4620074958918911
+          },
+          "car": {
+            "iou": 0.6545589172327753,
+            "f1": 0.7912186268078203,
+            "reference_pixels": 1101541,
+            "predicted_pixels": 1061492,
+            "precision": 0.806144558790834,
+            "recall": 0.7768353606447694
+          },
+          "clutter": {
+            "iou": 0.04371325375637855,
+            "f1": 0.08376487239009808,
+            "reference_pixels": 812038,
+            "predicted_pixels": 1002398,
+            "precision": 0.07581120473105493,
+            "recall": 0.09358305892088793
+          }
+        },
+        "mean_precision": 0.6136066748707679,
+        "mean_recall": 0.5906025281966797,
+        "mean_iou": 0.47673161139021447,
+        "mean_f1": 0.6003073391547041,
+        "pixel_accuracy": 0.7824764444444444,
+        "averaging": "All six classes including clutter; undefined classes excluded"
+      },
+      "6_10": {
+        "confusion_matrix": [
+          [
+            13377205,
+            835783,
+            364903,
+            447553,
+            55950,
+            686139
+          ],
+          [
+            483739,
+            8809980,
+            239769,
+            65344,
+            10350,
+            177510
+          ],
+          [
+            640245,
+            136299,
+            2060182,
+            953564,
+            3038,
+            298740
+          ],
+          [
+            744976,
+            79804,
+            394196,
+            2610005,
+            13455,
+            119945
+          ],
+          [
+            71169,
+            23648,
+            1553,
+            1919,
+            589923,
+            37167
+          ],
+          [
+            428280,
+            223211,
+            94781,
+            185379,
+            28854,
+            705442
+          ]
+        ],
+        "valid_pixels": 36000000,
+        "per_class": {
+          "impervious_surface": {
+            "iou": 0.7376073986121041,
+            "f1": 0.8489920095888869,
+            "reference_pixels": 15767533,
+            "predicted_pixels": 15745614,
+            "precision": 0.8495829378263686,
+            "recall": 0.8484019028214497
+          },
+          "building": {
+            "iou": 0.7947345693273076,
+            "f1": 0.8856290873420748,
+            "reference_pixels": 9786692,
+            "predicted_pixels": 10108725,
+            "precision": 0.8715223729995623,
+            "recall": 0.9001999858583473
+          },
+          "low_vegetation": {
+            "iou": 0.39716112714395047,
+            "f1": 0.5685258764045626,
+            "reference_pixels": 4092068,
+            "predicted_pixels": 3155384,
+            "precision": 0.6529100737025985,
+            "recall": 0.5034574205511736
+          },
+          "tree": {
+            "iou": 0.4647328948352427,
+            "f1": 0.6345633343443374,
+            "reference_pixels": 3962381,
+            "predicted_pixels": 4263764,
+            "precision": 0.612136365896424,
+            "recall": 0.6586961223567345
+          },
+          "car": {
+            "iou": 0.7047845586636496,
+            "f1": 0.8268312322304441,
+            "reference_pixels": 725379,
+            "predicted_pixels": 701570,
+            "precision": 0.8408612112832646,
+            "recall": 0.8132617569573974
+          },
+          "clutter": {
+            "iou": 0.23629351440721794,
+            "f1": 0.3822611890357068,
+            "reference_pixels": 1665947,
+            "predicted_pixels": 2024943,
+            "precision": 0.3483762258987043,
+            "recall": 0.42344804486577303
+          }
+        },
+        "mean_precision": 0.695898197934487,
+        "mean_recall": 0.6912442055684793,
+        "mean_iou": 0.5558856771649121,
+        "mean_f1": 0.6911337881576687,
+        "pixel_accuracy": 0.7820204722222223,
+        "averaging": "All six classes including clutter; undefined classes excluded"
+      },
+      "6_12": {
+        "confusion_matrix": [
+          [
+            9992431,
+            641931,
+            328507,
+            404564,
+            61074,
+            456523
+          ],
+          [
+            752770,
+            14277683,
+            351064,
+            243076,
+            25702,
+            177719
+          ],
+          [
+            558696,
+            287646,
+            2278611,
+            952954,
+            5413,
+            105622
+          ],
+          [
+            234292,
+            67366,
+            297956,
+            2095663,
+            10967,
+            55067
+          ],
+          [
+            61908,
+            27672,
+            657,
+            1508,
+            683722,
+            16000
+          ],
+          [
+            144120,
+            158545,
+            30493,
+            39578,
+            44851,
+            127649
+          ]
+        ],
+        "valid_pixels": 36000000,
+        "per_class": {
+          "impervious_surface": {
+            "iou": 0.7327539654417864,
+            "f1": 0.8457680433066699,
+            "reference_pixels": 11885030,
+            "predicted_pixels": 11744217,
+            "precision": 0.8508384168991427,
+            "recall": 0.8407577431441065
+          },
+          "building": {
+            "iou": 0.8393120310214921,
+            "f1": 0.9126369173536765,
+            "reference_pixels": 15828014,
+            "predicted_pixels": 15460843,
+            "precision": 0.9234737717729881,
+            "recall": 0.9020514513065252
+          },
+          "low_vegetation": {
+            "iou": 0.43839515747498997,
+            "f1": 0.6095615035920511,
+            "reference_pixels": 4188942,
+            "predicted_pixels": 3287288,
+            "precision": 0.6931583116538618,
+            "recall": 0.5439585938406404
+          },
+          "tree": {
+            "iou": 0.47596349844912245,
+            "f1": 0.6449529394856227,
+            "reference_pixels": 2761311,
+            "predicted_pixels": 3737343,
+            "precision": 0.5607360630265941,
+            "recall": 0.7589376930016213
+          },
+          "car": {
+            "iou": 0.7277710718976789,
+            "f1": 0.8424392371592833,
+            "reference_pixels": 791467,
+            "predicted_pixels": 831729,
+            "precision": 0.8220490087516487,
+            "recall": 0.8638667183849738
+          },
+          "clutter": {
+            "iou": 0.09412483860763461,
+            "f1": 0.1720550256905169,
+            "reference_pixels": 545236,
+            "predicted_pixels": 938580,
+            "precision": 0.13600225873127492,
+            "recall": 0.23411696953245933
+          }
+        },
+        "mean_precision": 0.6643763051392517,
+        "mean_recall": 0.6906148615350544,
+        "mean_iou": 0.5513867604821173,
+        "mean_f1": 0.6712356110979699,
+        "pixel_accuracy": 0.8182155277777777,
+        "averaging": "All six classes including clutter; undefined classes excluded"
+      },
+      "7_7": {
+        "confusion_matrix": [
+          [
+            5860431,
+            321722,
+            248731,
+            152807,
+            47465,
+            84653
+          ],
+          [
+            491489,
+            11639154,
+            133579,
+            42799,
+            4155,
+            111297
+          ],
+          [
+            1248446,
+            334380,
+            5569701,
+            1353757,
+            4472,
+            188699
+          ],
+          [
+            1160512,
+            148231,
+            1105225,
+            3223456,
+            52773,
+            155006
+          ],
+          [
+            63968,
+            8630,
+            2083,
+            1918,
+            593880,
+            21331
+          ],
+          [
+            737361,
+            367756,
+            200442,
+            96327,
+            22809,
+            200555
+          ]
+        ],
+        "valid_pixels": 36000000,
+        "per_class": {
+          "impervious_surface": {
+            "iou": 0.5625517814349487,
+            "f1": 0.7200424179457743,
+            "reference_pixels": 6715809,
+            "predicted_pixels": 9562207,
+            "precision": 0.6128743082010252,
+            "recall": 0.872632172832789
+          },
+          "building": {
+            "iou": 0.8556193281694473,
+            "f1": 0.9221927312144442,
+            "reference_pixels": 12422473,
+            "predicted_pixels": 12819873,
+            "precision": 0.9078993216235449,
+            "recall": 0.936943392833295
+          },
+          "low_vegetation": {
+            "iou": 0.5360886432138555,
+            "f1": 0.6979918061137841,
+            "reference_pixels": 8699455,
+            "predicted_pixels": 7259761,
+            "precision": 0.767201702645583,
+            "recall": 0.6402356239557535
+          },
+          "tree": {
+            "iou": 0.4302065006043793,
+            "f1": 0.6016005386950511,
+            "reference_pixels": 5845203,
+            "predicted_pixels": 4871064,
+            "precision": 0.6617560352317277,
+            "recall": 0.551470325324886
+          },
+          "car": {
+            "iou": 0.7211797679129164,
+            "f1": 0.8380063272384511,
+            "reference_pixels": 691810,
+            "predicted_pixels": 725554,
+            "precision": 0.8185193658914429,
+            "recall": 0.8584437923707376
+          },
+          "clutter": {
+            "iou": 0.0917352929875823,
+            "f1": 0.16805409438865823,
+            "reference_pixels": 1625250,
+            "predicted_pixels": 761541,
+            "precision": 0.2633541726578083,
+            "recall": 0.12339947700353791
+          }
+        },
+        "mean_precision": 0.6719341510418554,
+        "mean_recall": 0.6638541307201665,
+        "mean_iou": 0.5328968857205215,
+        "mean_f1": 0.6579813192660272,
+        "pixel_accuracy": 0.7524215833333333,
+        "averaging": "All six classes including clutter; undefined classes excluded"
+      },
+      "7_8": {
+        "confusion_matrix": [
+          [
+            6868009,
+            414817,
+            509538,
+            411470,
+            58618,
+            223558
+          ],
+          [
+            1154581,
+            11474240,
+            214475,
+            141297,
+            1364,
+            246902
+          ],
+          [
+            695653,
+            259117,
+            4098504,
+            1334727,
+            7755,
+            327085
+          ],
+          [
+            514302,
+            80374,
+            984152,
+            4184255,
+            21209,
+            249241
+          ],
+          [
+            64027,
+            28611,
+            2342,
+            2966,
+            563508,
+            37846
+          ],
+          [
+            183770,
+            132760,
+            101301,
+            87223,
+            22058,
+            298345
+          ]
+        ],
+        "valid_pixels": 36000000,
+        "per_class": {
+          "impervious_surface": {
+            "iou": 0.6188319283338062,
+            "f1": 0.7645412936360148,
+            "reference_pixels": 8486010,
+            "predicted_pixels": 9480342,
+            "precision": 0.7244473880794596,
+            "recall": 0.8093331259331535
+          },
+          "building": {
+            "iou": 0.8109841454996976,
+            "f1": 0.8956281009030325,
+            "reference_pixels": 13232859,
+            "predicted_pixels": 12389919,
+            "precision": 0.9260948356482395,
+            "recall": 0.8671021130052092
+          },
+          "low_vegetation": {
+            "iou": 0.48021939742337383,
+            "f1": 0.6488489453108025,
+            "reference_pixels": 6722841,
+            "predicted_pixels": 5910312,
+            "precision": 0.6934496859049065,
+            "recall": 0.6096386929275882
+          },
+          "tree": {
+            "iou": 0.5222996109454545,
+            "f1": 0.6861981796357025,
+            "reference_pixels": 6033533,
+            "predicted_pixels": 6161938,
+            "precision": 0.6790485395990677,
+            "recall": 0.6934999775421797
+          },
+          "car": {
+            "iou": 0.6954278887923545,
+            "f1": 0.820356788265061,
+            "reference_pixels": 699300,
+            "predicted_pixels": 674512,
+            "precision": 0.835430652086249,
+            "recall": 0.8058172458172458
+          },
+          "clutter": {
+            "iou": 0.15619429251725966,
+            "f1": 0.2701869288373572,
+            "reference_pixels": 825457,
+            "predicted_pixels": 1382977,
+            "precision": 0.21572665344398353,
+            "recall": 0.36143009266382137
+          }
+        },
+        "mean_precision": 0.6790329591269844,
+        "mean_recall": 0.6911368746481997,
+        "mean_iou": 0.5473262105853244,
+        "mean_f1": 0.6809600394313283,
+        "pixel_accuracy": 0.7635239166666666,
+        "averaging": "All six classes including clutter; undefined classes excluded"
+      }
+    }
+  },
+  "inference_protocol": {
+    "tta": "none",
+    "checkpoint": "/kaggle/input/notebooks/squarcle01/unetmamba-composite-2-3/full_unetmamba_composite_beta_2_3_runs/train_20261115_081847_78349908/best.pt",
+    "checkpoint_epoch": 9,
+    "split": "validation",
+    "gpu": "Tesla T4",
+    "end_to_end_seconds": 143.26149629500014,
+    "timing_scope": "Startup, loading, inference, stitching, evaluation, preview and output writing"
+  }
+}
